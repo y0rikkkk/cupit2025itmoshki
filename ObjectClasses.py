@@ -1,6 +1,8 @@
+from datetime import datetime
+
 class Route:
     params = ['station_from', 'station_to','transport_types','departure_time','arrival_time','has_transfers','transfers',
-             'details']
+             'details','tickets_info','duration']
     def __init__(self,**kwargs):
         for field in self.__class__.params:
             setattr(self, field, kwargs.get(field, None))
@@ -38,6 +40,17 @@ class Station:
     def __repr__(self):
         return f'Station({self.title} - {self.code})'
 
-#добавить
+
+
+
+
+def select_date():
+    while True:
+        raw = input("📅 Введите дату в формате ГГГГ-ММ-ДД: ").strip()
+        try:
+            dt = datetime.strptime(raw, "%Y-%m-%d")
+            return dt.strftime("%Y-%m-%d")
+        except ValueError:
+            print("❌ Неверный формат. Попробуйте ещё раз.")
 
 

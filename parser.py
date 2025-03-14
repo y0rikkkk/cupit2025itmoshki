@@ -24,7 +24,8 @@ def parse_trip(detail: dict):
         to_Station=parse_station(detail.get("to")),
         stops=detail.get("stops"),
         departure=detail.get("departure"),
-        duration=detail.get("duration")
+        duration=detail.get("duration"),
+        tickets_info = thread.get("tickets_info"),
     )
 
 def parse_transfer(detail: dict):
