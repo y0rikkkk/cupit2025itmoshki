@@ -6,6 +6,9 @@ class Route:
     def __init__(self,**kwargs):
         for field in self.__class__.params:
             setattr(self, field, kwargs.get(field, None))
+        self.departure_time = datetime.fromisoformat(self.departure_time)
+        self.arrival_time = datetime.fromisoformat(self.arrival_time)
+
 
     def __repr__(self):
         return f'Route({self.station_from}-{self.station_to})'
@@ -17,7 +20,7 @@ class Trip:
     def __init__(self,**kwargs):
         for field in self.__class__.params:
             setattr(self, field, kwargs.get(field, None))
-
+        self.departure = datetime.fromisoformat(self.departure)
     def __repr__(self):
         return f'Trip({self.title})'
 
