@@ -1,4 +1,4 @@
-from cupit2025itmoshki.ObjectClasses import Station,Route,Trip,Transfer
+from ObjectClasses import Station,Route,Trip,Transfer
 
 def parse_station(data: dict | None):
     if not data:
