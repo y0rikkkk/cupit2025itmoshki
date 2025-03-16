@@ -21,7 +21,16 @@ def filter_by_transfer_duration_range(routes, min_sec, max_sec):
     filtered = []
     for r in routes:
         transfers = [d for d in r.details if isinstance(d, Transfer)]
-        if all(min_sec <= t.duration <= max_sec for t in transfers):
+        valid = True
+        for t in transfers:
+            from_city = t.transfer_from.title.lower() if t.transfer_from else ""
+            to_city = t.transfer_to.title.lower() if t.transfer_to else ""
+            is_moscow_or_spb = any(city in (from_city, to_city) for city in ["москва", "санкт-петербург"])
+            adjusted_min = max(min_sec, 7200) if is_moscow_or_spb else min_sec
+            if not (adjusted_min <= t.duration <= max_sec):
+                valid = False
+                break
+        if valid:
             filtered.append(r)
     return filtered
 

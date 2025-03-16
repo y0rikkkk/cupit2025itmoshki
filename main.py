@@ -53,6 +53,19 @@ user_filters = {
     'transport_types': transport_types,  # пустой список = все типы
     'direct_only': direct_only
 }
+params = build_api_params(base_params, user_filters)
+# Выполнение GET-запроса
+response = requests.get(url, params=params)
+parsed = response.json()
+
+
+if response.status_code == 200:
+    data = response.json()
+else:
+    print(parsed)
+
+routes = [parse_route(seg) for seg in data.get('segments', [])]
+
 
 # Интервал длительности пересадок
 if user_filters['direct_only'] == False:
@@ -72,18 +85,6 @@ only_non_working = input().strip().lower() == 'y'
 
 
 
-params = build_api_params(base_params, user_filters)
-# Выполнение GET-запроса
-response = requests.get(url, params=params)
-parsed = response.json()
-
-
-if response.status_code == 200:
-    data = response.json()
-else:
-    print(parsed)
-
-routes = [parse_route(seg) for seg in data.get('segments', [])]
 if user_filters['direct_only'] == False:
     routes = filter_by_transfer_duration_range(routes, transfer_min, transfer_max)
 if only_non_working:
@@ -105,6 +106,7 @@ elif sort_choice == '2':
 elif sort_choice == '3':
     routes = sort_by_duration(routes)
 
+print(len(routes))
 for route in routes:
     print(route.pretty_print())
     print("="*40)
