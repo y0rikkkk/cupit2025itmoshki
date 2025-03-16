@@ -81,8 +81,3 @@ class Create_price():
             model.fit(X_train, y_train)
 
         return model
-
-
-price = Create_price.__init__()
-pred = np.array([40, 0, 10000]).reshape(1, -1)
-print(price.predict(pred))
